@@ -1,0 +1,349 @@
+/* grid pattern */
+body{
+    background-image: linear-gradient(0deg, transparent calc(100% - 1px), #f0f0f0 calc(100% - 1px)),
+    linear-gradient(90deg, transparent calc(100% - 1px), #f0f0f0 calc(100% - 1px));
+    background-size: 16px 16px;
+    background-repeat: repeat;
+    background-position: center center;
+    padding: 20px;
+}
+
+/* do not drag images */
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    pointer-events: none;
+}
+
+
+
+/***** global navigation start *****/
+
+/* global navigation underline */
+.navbar {
+    border-bottom: 3px solid #ccc;
+}
+
+/***** global navigation end *****/
+
+
+
+#wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+
+/***** sidebar setting start *****/
+
+
+#sidebar {
+    flex: 0 1 10%;
+    margin-left: 3%;
+    margin-top: 20px;
+    top: 0;
+    height: 400px;
+    position: sticky;
+}
+
+
+#sidebar #menu{
+    margin-left: 15px;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* vertical spacing */
+#sidebar li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* remove Underlines */
+#sidebar li a{
+    display: block; 
+    text-decoration: none;
+    color: black;
+}
+
+/* spacing between icon and text */
+#sidebar li i {
+    margin-right: 30px;
+}
+
+/* icon and Text Setting */
+#sidebar li span {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px; 
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+/* hide text next to an icon when the window width becomes smaller than a certain width */
+@media (max-width: 768px) {
+    #sidebar li span .sidemenu {
+      display: none;
+    }
+  
+    #sidebar li span i {
+      margin-right: 0;
+    }
+
+    #sidebar li{
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    /* the hover area is "icon" + "text" */
+    #sidebar a:hover {
+        background-color: #e4efff;
+        border-radius: 20px;
+    }
+}
+
+/* the hover area is "icon" */
+@media (min-width: 769px) {
+    #sidebar li:hover {
+        background-color: #e4efff;
+        border-radius: 20px;
+    }
+}
+
+.icon_text i{
+    font-size: 40px;
+}
+
+.sidemenu{
+    font-size: 19px;
+}
+
+
+/***** sidebar setting end *****/
+
+/***** main start *****/
+#main {
+    margin-left: 7%;
+    margin-top: 20px;
+    flex: 1 1 60%;
+    display: block;
+}
+
+/* tooltip design */
+.heading + i{
+    color:mediumblue;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+/* radio button */
+.radio_textarea1, .radio_textarea2{
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+/* textarea design */
+textarea {
+    resize: none;
+    border:2px dashed #54a1ff;
+    padding: 13px;
+    border-radius: 5px;
+    background-color: transparent;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+/* textarea is clicked */
+textarea:focus{
+    border:2px solid #003474;
+}
+
+/* selected "No Scroll" by radio button */
+.textarea_scroll{
+    overflow-y: hidden;
+}
+
+#createBib {
+    padding-top: 40px;
+    padding-bottom: 100px;
+}
+
+#deleteRed{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#deleteButton{
+    margin-left: 806px;
+}
+
+.inputfield{
+    margin-bottom: 25px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.allocation{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* tooltip design */
+.allocation + i{
+    color:mediumblue;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+/* textbox design */
+.bib_input {
+    font-weight:350;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: all 0.2s;
+    border:2px dashed #54a1ff;
+    padding: 13px;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+/* textbox is clicked */
+.bib_input:focus{
+    border:2px solid #003474;
+}
+
+/* checkmark design and animation */
+.checkmark {
+    color: #00c925;
+    margin-left: 20px;
+    margin-right: 5px;
+    font-size: 30px;
+    display: none;
+    animation: fadeInRotate 0.5s forwards;
+}
+
+/* xmark design and animation */
+.xmark{
+    color: #ff0000;
+    margin-left: 20px;
+    margin-right: 5px;
+    font-size: 30px;
+    display: none;
+    animation: fadeInRotate 0.5s forwards;
+}
+
+/* appearance by clockwise rotation */
+@keyframes fadeInRotate {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(360deg);
+    }
+}
+
+/* appearance by counterclockwise rotation */
+@keyframes fadeOutRotate {
+    0% {
+        opacity: 1;
+        transform: rotate(360deg);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+}
+
+#bibCreateButton{
+    margin-left: 125px;
+    margin-right: 100px;
+}
+
+
+#bibCreateArea {
+    padding-top: 50px;
+}
+
+#Create_Button{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/***** main end *****/
+
+/***** top button start *****/
+
+/* top button design */
+#button_top {
+    background-color: rgb(0, 174, 255);
+    filter:drop-shadow(5px 5px 5px #8cb5cf);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 20px;
+    transition: 0.2s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#button_top::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    transform: rotate(-45deg);
+}
+
+#button_top:hover::before {
+    border-top: 2px solid rgb(0, 174, 255);
+    border-right: 2px solid rgb(0, 174, 255);
+} 
+
+#button_top:hover {
+    background-color: white;
+    color: rgb(0, 174, 255);
+}
+
+/***** top button end *****/
+
+/***** footer start *****/
+
+footer {
+    bottom: 0;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+/***** footer end *****/
