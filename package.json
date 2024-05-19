@@ -12,5 +12,9 @@
   "devDependencies": {
     "electron": "^30.0.3",
     "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "electron-chartjs": "^1.0.0",
+    "openai": "^4.47.1"
   }
 }

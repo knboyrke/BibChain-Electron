@@ -1,5 +1,5 @@
 // アプリケーション作成用のモジュールを読み込み
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, shell} = require('electron');
 
 // メインウィンドウ
 let mainWindow;
@@ -20,8 +20,10 @@ function createWindow() {
   // （今回はmain.jsと同じディレクトリのindex.html）
   mainWindow.loadFile('index.html');
 
-  // デベロッパーツールの起動
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url)
+    return { action: 'deny' }
+  })
 
   // メインウィンドウが閉じられたときの処理
   mainWindow.on('closed', () => {

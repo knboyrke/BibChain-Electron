@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/gh/LieutenantPeacock/SmoothScroll@1.2.0/src/smoothscroll.min.js" integrity="sha384-UdJHYJK9eDBy7vML0TvJGlCpvrJhCuOPGTc7tHbA+jHEgCgjWpPbmMvmd/2bzdXU" crossorigin="anonymous"></script>
     
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
     <!-- BootStrap, Icon -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
     <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png">
 
     <!-- Load a JavaScript file -->
-    <script src="functions.js"></script>
+    <script src="index.js"></script>
 
 </head>
 
@@ -55,27 +55,25 @@
                 <ul class="sidelinks">
                     <li>
                         <a href="https://www.semanticscholar.org/" target="_blank">
-                            <span class="icon_text" id="home">
+                            <span class="icon_text">
                                 <i class="bi bi-newspaper"></i>
                                 <span class="sidemenu">SEMANTIC</span>
                             </span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="#">
-                            <span class="icon_text" id="list">
-                                <i class="bi bi-grid"></i>
-                                <span class="sidemenu">List</span>
-                            </span>
-                        </a>
-                    </li> -->
                     <li>
                         <a href="https://scholar.google.co.jp/schhp?hl=ja" target="_blank">
-                            <span class="icon_text" id="google">
+                            <span class="icon_text">
                                 <i class="bi bi-google"></i>
                                 <span class="sidemenu">Google</span>
                             </span>
                         </a>
+                    </li>
+                    <li>
+                        <span class="icon_text" id="apikey">
+                            <i class="bi bi-key"></i>
+                            <span class="sidemenu">OpenAI API</span>
+                        </span>
                     </li>
                 </ul>
             </section>
@@ -91,11 +89,57 @@
             <p></p>
             <div id="alertArea"></div>
             <div>
-                <textarea id="textarea1" spellcheck="false" cols="100" rows="20" placeholder="@article{吉田直人2016ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証,&#10;    title={ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証},&#10;    author={吉田直人 and 米澤朋子},&#10;    journal={電子情報通信学会論文誌 D},&#10;    volume={99},&#10;    number={9},&#10;    pages={915--925},&#10;    year={2016},&#10;    publisher={The Institute of Electronics, Information and Communication Engineers}&#10;}"></textarea>
-            </div>
-            <div>
+                <form id="input-form" method="POST">
+                    <textarea id="textarea1" name="textarea1" spellcheck="false" cols="100" rows="20" placeholder="@article{吉田直人2016ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証,&#10;    title={ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証},&#10;    author={吉田直人 and 米澤朋子},&#10;    journal={電子情報通信学会論文誌 D},&#10;    volume={99},&#10;    number={9},&#10;    pages={915--925},&#10;    year={2016},&#10;    publisher={The Institute of Electronics, Information and Communication Engineers}&#10;}"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" title="関連度、年代、ページ数を5段階で評価する。関連度が高い、新しい論文、ページ数が短いと評価が高い。"><i class="bi bi-boxes"></i>　英語論文のAI提案</button>
+                </form>
+                <p></p>
                 <button type="button" class="btn btn-outline-success" onclick="ButtonPress()"><i class="bi bi-file-earmark-arrow-down"></i>　<b>Bibファイルをダウンロード</b></button>
             </div>
+
+            <!-- レーダーチャートのscript * start -->
+            <script>
+                var myRadarChart;
+                function Chartjs(id,num1,num2,num3){
+                    let ctx = document.getElementById(id);
+                    myRadarChart = new Chart(ctx, {
+                        type: 'radar', 
+                        data: { 
+                            labels: ["関連度", "年代", "ページ数"],
+                            datasets: [{
+                                data: [num1, num2, num3],
+                                backgroundColor: 'RGBA(225,95,150, 0.5)',
+                                borderColor: 'RGBA(225,95,150, 1)',
+                                borderWidth: 1,
+                                pointBackgroundColor: 'RGB(46,106,177)'
+                            }]
+                        },
+                        options: {
+                            legend: {
+                            display: false
+                            },
+                            title: {
+                                display: true,
+                                text: '各評価点'
+                            },
+                            scale:{
+                                ticks:{
+                                    suggestedMin: 0,
+                                    suggestedMax: 5,
+                                    stepSize: 1,
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            </script>
+
+            <!-- レーダーチャートのscript * end -->
+
+            
+            <div id="ai_chart"></div>
 
             <div id="createBib">
                 <h3><img src="images/CreateBibtex.png" alt="CreateBibTex" width="561" height="118"></h3>
@@ -157,6 +201,7 @@
     <footer>
         <small>&copy; 2024 BibChain</small>
     </footer>
+    
 </body>
 
 </html>

@@ -1,30 +1,87 @@
+/***** OpenAI API setting * start *****/
+
+// enter your OpenAI API Key here（if under development.）
+let apiKey = 'XXXXXXXXXX';
+
+const endpoint = 'https://api.openai.com/v1/chat/completions';
+const promptText = `これらの論文に関する英語論文を検索して5つ教えて。表示するのは、タイトル、ページ数、年代、その英語論文のURLのみ。URLはただし、下記のtableの中のtitleにタイトルを、pageにページ数を、yearに年代を、urlにその英語論文のWebサイトのURLを入れ、それぞれ個別に出力せよ。URLでaタグを使用するときはtarget _blankを設定せよ。また、chart_idのidを提案した順の番号の数字に置換し、chart_数字に。さらに、関連度、年代、ページ数を5段階評価する。関連度が高いと５に近づき、年代が新しいと５に近づき、ページ数が少ないと５に近づく。関連度の評価した値をnum1に、年代の評価した値をnum2に、ページ数の評価した値をnum3に代入。前置き不要。
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2">タイトル：title</td>
+                <td rowspan="2"><canvas id="chart_id" width="160" height="160"></canvas></td>
+            </tr>
+            <tr>
+                <td>ページ数：page</td>
+                <td>年代：year</td>
+            </tr>
+            <tr>
+                <td colspan="3">url</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        Chartjs("chart_id", num1, num2, num3);
+    </script>`;
+
 
 /***** sidebar setting * start *****/
 
-/**
- * remove '.bold' and make the icon and text bold when the button is clicked
- */
-// $(document).ready(function(){
-//     // add a new id to $('#home, #list')
-//     $('#home, #list').click(function(){
-//         // text change
-//         $('.bold').removeClass('bold');
-//         $(this).addClass('bold');
+$(document).ready(function(){
+    const api_key = $('#apikey');
+    api_key.click(function(){
+        let openai_api_key = prompt('OpenAIのAPIキーを入力してください。\n※ gpt-4oのモデルを使用しますので、金額にご注意ください。');
 
-//         // i tag image change
-//         // remove '-fill' when clicked
-//         $('#sidebar i').attr('class', function() {
-//             return $(this).attr('class').replace('-fill', '');
-//         });
-
-//         // get the class name and append -fill to the end of it
-//         $(this).find('i').attr('class', function() {
-//             return $(this).attr('class').replace($(this).attr('class'), $(this).attr('class') + '-fill');
-//         });
-//     });
-// });
+        // apikey is entered correctly
+        if(!(openai_api_key === '' || openai_api_key === null)){
+            apiKey = openai_api_key;
+            api_key.css('background-color', '#c0c0c0');
+        }
+    });
+});
 
 /***** sidebar setting * end *****/
+
+
+// using OpenAI API with fetch
+window.onload = function() {
+    document.getElementById('input-form').addEventListener("submit", async (event) => {
+        if(apiKey !== 'XXXXXXXXXX'){
+            event.preventDefault();
+            const input = document.getElementById('textarea1').value;
+            console.log(input);
+            fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        messages: [
+                        {"role": "user", "content": input + promptText}],
+                        model: "gpt-4o",
+                        max_tokens: 3000,
+                        temperature: 1,
+                        n: 1,
+                        stop: '###'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const text = data.choices[0].message.content;
+                    console.log(text);
+                    $('#ai_chart').html(text);
+                })
+                .catch(error => console.error(error));
+        }else{
+            alert('⚠️APIキーが入力されていません');
+        }
+    });
+};
+
+
+/***** OpenAI API setting * end *****/
+
 
 
 /***** main setting * start *****/
@@ -80,7 +137,6 @@ function SplitBib(BibText,area){
 
     // store separated by @*{*}
     let splitText = BibText.split("@").filter(p => p.trim() !== "");
-    console.log(splitText);
 
     // store title and first author in set
     let titleSet = new Set();
@@ -676,18 +732,11 @@ $(document).ready(function(){
     $(window).scroll(function(){
         if (window.scrollY > 30) {
             pagetop_button.css({'opacity': '1', 'visibility': 'visible'});
-            /*
-                pagetop_button.style.opacity = "1";
-                pagetop_button.style.visibility = "visible";
-            */
         } else {
             pagetop_button.css({'opacity': '0', 'visibility': 'hidden'});
-            /*
-                pagetop_button.style.opacity = "0";
-                pagetop_button.style.visibility = "hidden";
-            */
         }
     });
 });
 
 /***** top button * end *****/
+
