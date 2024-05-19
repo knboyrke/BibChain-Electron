@@ -49,7 +49,7 @@ window.onload = function() {
         if(apiKey !== 'XXXXXXXXXX'){
             event.preventDefault();
             const input = document.getElementById('textarea1').value;
-            console.log(input);
+            $('#loading').show();
             fetch(endpoint, {
                     method: 'POST',
                     headers: {
@@ -68,8 +68,8 @@ window.onload = function() {
                 })
                 .then(response => response.json())
                 .then(data => {
+                    $('#loading').fadeOut();
                     const text = data.choices[0].message.content;
-                    console.log(text);
                     $('#ai_chart').html(text);
                 })
                 .catch(error => console.error(error));

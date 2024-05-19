@@ -92,8 +92,14 @@
                 <form id="input-form" method="POST">
                     <textarea id="textarea1" name="textarea1" spellcheck="false" cols="100" rows="20" placeholder="@article{吉田直人2016ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証,&#10;    title={ユーザ視点位置に応じた描画エージェントを用いた実空間内注視コミュニケーションの検証},&#10;    author={吉田直人 and 米澤朋子},&#10;    journal={電子情報通信学会論文誌 D},&#10;    volume={99},&#10;    number={9},&#10;    pages={915--925},&#10;    year={2016},&#10;    publisher={The Institute of Electronics, Information and Communication Engineers}&#10;}"></textarea>
                     <br>
-                    <button type="submit" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" title="関連度、年代、ページ数を5段階で評価する。関連度が高い、新しい論文、ページ数が短いと評価が高い。"><i class="bi bi-boxes"></i>　英語論文のAI提案</button>
+                    <div id="fetchBtn">
+                        <button type="submit" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="関連度、年代、ページ数を5段階で評価する。関連度が高い、新しい論文、ページ数が短いと評価が高い。"><i class="bi bi-boxes"></i>　英語論文のAI提案</button>
+                        <div class="spinner-box" id="loading" style="display: none;">
+                            <div class="three-quarter-spinner"></div>
+                        </div>
+                    </div>
                 </form>
+
                 <p></p>
                 <button type="button" class="btn btn-outline-success" onclick="ButtonPress()"><i class="bi bi-file-earmark-arrow-down"></i>　<b>Bibファイルをダウンロード</b></button>
             </div>

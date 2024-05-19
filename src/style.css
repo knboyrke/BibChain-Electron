@@ -296,12 +296,13 @@ textarea:focus{
 }
 
 table , td, th {
-	border: 1px solid #52bae2;
+	border: 2px solid #52bae2;
 	border-collapse: collapse;
     margin-top: 15px;
     margin-bottom: 15px;
     white-space: nowrap;
 }
+
 
 td, th {
 	padding: 3px;
@@ -309,6 +310,7 @@ td, th {
 	height: 25px;
     overflow-wrap: break-word;
     word-break: break-all;
+    border: dashed 1px #52bae2;
 }
 
 
@@ -388,3 +390,28 @@ footer {
 }
 
 /***** footer end *****/
+
+
+#fetchBtn{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+@keyframes spin {
+    from {
+      transform: rotate(0);
+    }
+    to{
+      transform: rotate(359deg);
+    }
+}
+
+.three-quarter-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #004fd7;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin .7s linear 0s infinite;
+}
