@@ -28,17 +28,29 @@ const promptText = `これらの論文に関する英語論文を検索して5�
 /***** sidebar setting * start *****/
 
 $(document).ready(function(){
-    const api_key = $('#apikey');
-    api_key.click(function(){
+    const api_key_button = $('#apikey');
+
+    api_key_button.click(function(){
         let openai_api_key = prompt('OpenAIのAPIキーを入力してください。\n※ gpt-4oモデルを使用しますので、金額にご注意ください。');
 
         // apikey is entered correctly
-        if(!(openai_api_key === '' || openai_api_key === null)){
+        if(APIKey_Input(openai_api_key)){
             apiKey = openai_api_key;
-            api_key.css('background-color', '#c0c0c0');
+            api_key_button.css('background-color', '#c0c0c0');
+        }else{
+            apiKey = 'XXXXXXXXXX';
+            api_key_button.css('background-color', '');
         }
     });
 });
+
+function APIKey_Input(apikey){
+    if(apikey.startsWith("sk-")){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 /***** sidebar setting * end *****/
 
@@ -46,8 +58,10 @@ $(document).ready(function(){
 // using OpenAI API with fetch
 window.onload = function() {
     document.getElementById('input-form').addEventListener("submit", async (event) => {
-        if(apiKey !== 'XXXXXXXXXX'){
-            event.preventDefault();
+        // cancel reload
+        event.preventDefault();
+
+        if(APIKey_Input(apiKey)){
             const input = document.getElementById('textarea1').value;
             $('#loading').show();
             fetch(endpoint, {
@@ -74,7 +88,7 @@ window.onload = function() {
                 })
                 .catch(error => console.error(error));
         }else{
-            alert('⚠️APIキーが入力されていません');
+            alert('⚠️APIキーが正しく入力されていません');
         }
     });
 };
