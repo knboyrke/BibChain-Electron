@@ -30,7 +30,7 @@ const promptText = `これらの論文に関する英語論文を検索して5�
 $(document).ready(function(){
     const api_key = $('#apikey');
     api_key.click(function(){
-        let openai_api_key = prompt('OpenAIのAPIキーを入力してください。\n※ gpt-4oのモデルを使用しますので、金額にご注意ください。');
+        let openai_api_key = prompt('OpenAIのAPIキーを入力してください。\n※ gpt-4oモデルを使用しますので、金額にご注意ください。');
 
         // apikey is entered correctly
         if(!(openai_api_key === '' || openai_api_key === null)){
