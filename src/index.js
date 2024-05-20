@@ -4,7 +4,7 @@
 let apiKey = 'XXXXXXXXXX';
 
 const endpoint = 'https://api.openai.com/v1/chat/completions';
-const promptText = `Please search English-language research papers related to these thesis. Only the title, page number, age, and URL of the article should be displayed. If you use a tag “a” in the URL, set target _blank. Also, replace the id in chart_id with a number in the order in which the suggestions were made, and make it chart_number. In addition, rate the relevance, age, and number of pages on a 5-point scale. The higher the relevance, the closer to 5, the newer the age, the closer to 5, and the fewer the number of pages, the closer to 5. Substitute the evaluated value of relevance into num1, the evaluated value of age into num2, and the evaluated value of number of pages into num3. No preliminaries required.
+const promptText = `Please search English-language research papers related to these thesis. Only the title, page number, age, and the URL of the article should be displayed. If you use a tag “a” in the URL, set target _blank. Also, replace the id in chart_id with a number in the order in which the suggestions were made, and make it chart_number. In addition, rate the relevance, age, and number of pages on a 5-point scale. The higher the relevance, the closer to 5, the newer the age, the closer to 5, and the fewer the number of pages, the closer to 5. Substitute the evaluated value of relevance into num1, the evaluated value of age into num2, and the evaluated value of number of pages into num3. No preliminaries required.
     <table>
         <tbody>
             <tr>
@@ -84,11 +84,12 @@ window.onload = function() {
                 .then(data => {
                     $('#loading').fadeOut();
                     const text = data.choices[0].message.content;
+                    console.log(text);
                     $('#ai_chart').html(text);
                 })
                 .catch(error => console.error(error));
         }else{
-            alert('⚠️APIキーが正しく入力されていません');
+            alert('APIキーが正しく入力されていません');
         }
     });
 };

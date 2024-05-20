@@ -106,10 +106,9 @@
 
             <!-- radar chart script * start -->
             <script>
-                var myRadarChart;
                 function Chartjs(id,num1,num2,num3){
                     let ctx = document.getElementById(id);
-                    myRadarChart = new Chart(ctx, {
+                    let myRadarChart = new Chart(ctx, {
                         type: 'radar', 
                         data: { 
                             labels: ["関連度", "年代", "ページ数"],
