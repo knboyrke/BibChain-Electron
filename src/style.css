@@ -105,6 +105,7 @@ img {
 
     #sidebar li:hover {
         border-left: 5px solid orange;
+        border-radius: 50px;
     }
 }
 
@@ -112,6 +113,7 @@ img {
 @media (min-width: 769px) {
     #sidebar li:hover {
         border-left: 5px solid orange;
+        border-radius: 50px;
     }
 }
 
