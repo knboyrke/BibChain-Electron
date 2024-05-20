@@ -84,7 +84,7 @@ window.onload = function() {
                 .then(data => {
                     $('#loading').fadeOut();
                     const text = data.choices[0].message.content;
-                    console.log(text);
+                    // console.log(text);
                     $('#ai_chart').html(text);
                 })
                 .catch(error => console.error(error));
