@@ -4,7 +4,7 @@
 let apiKey = 'XXXXXXXXXX';
 
 const endpoint = 'https://api.openai.com/v1/chat/completions';
-const promptText = `これらの論文に関する英語論文を検索して5つ教えて。表示するのは、タイトル、ページ数、年代、その英語論文のURLのみ。URLはただし、下記のtableの中のtitleにタイトルを、pageにページ数を、yearに年代を、urlにその英語論文のWebサイトのURLを入れ、それぞれ個別に出力せよ。URLでaタグを使用するときはtarget _blankを設定せよ。また、chart_idのidを提案した順の番号の数字に置換し、chart_数字に。さらに、関連度、年代、ページ数を5段階評価する。関連度が高いと５に近づき、年代が新しいと５に近づき、ページ数が少ないと５に近づく。関連度の評価した値をnum1に、年代の評価した値をnum2に、ページ数の評価した値をnum3に代入。前置き不要。
+const promptText = `Please search English-language research papers related to these thesis. Only the title, page number, age, and URL of the article should be displayed. If you use a tag “a” in the URL, set target _blank. Also, replace the id in chart_id with a number in the order in which the suggestions were made, and make it chart_number. In addition, rate the relevance, age, and number of pages on a 5-point scale. The higher the relevance, the closer to 5, the newer the age, the closer to 5, and the fewer the number of pages, the closer to 5. Substitute the evaluated value of relevance into num1, the evaluated value of age into num2, and the evaluated value of number of pages into num3. No preliminaries required.
     <table>
         <tbody>
             <tr>
