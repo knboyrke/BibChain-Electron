@@ -52,6 +52,7 @@ function APIKey_Input(apikey){
     }
 }
 
+
 /***** sidebar setting * end *****/
 
 
@@ -84,7 +85,6 @@ window.onload = function() {
                 .then(data => {
                     $('#loading').fadeOut();
                     const text = data.choices[0].message.content;
-                    // console.log(text);
                     $('#ai_chart').html(text);
                 })
                 .catch(error => console.error(error));
@@ -191,7 +191,6 @@ function SplitBib(BibText,area){
                 // document.getElementById('textarea1').setSelectionRange(cursorPosition,cursorPosition);
                 // document.getElementById('textarea1').focus();
                 //throw '<div class="alert alert-danger">' + title + '<br>論文が重複しているので、1つだけにしてください</div>';
-
 
             } else {
                 // add title to set
