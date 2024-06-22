@@ -1,101 +1,69 @@
-/***** OpenAI API setting * start *****/
+/***** Dify * start *****/
 
-// enter your OpenAI API Key here（if under development.）
-let apiKey = 'XXXXXXXXXX';
+const Dify_APIKEY = "XXXXXXXXXXX";
+const BASE_URL = "https://api.dify.ai/v1";
 
-const endpoint = 'https://api.openai.com/v1/chat/completions';
-const promptText = `Please search English-language research papers related to these thesis. Only the title, page number, age, and the URL of the article should be displayed. If you use a tag “a” in the URL, set target _blank. Also, replace the id in chart_id with a number in the order in which the suggestions were made, and make it chart_number. In addition, rate the relevance, age, and number of pages on a 5-point scale. The higher the relevance, the closer to 5, the newer the age, the closer to 5, and the fewer the number of pages, the closer to 5. Substitute the evaluated value of relevance into num1, the evaluated value of age into num2, and the evaluated value of number of pages into num3. No preliminaries required.
-    <table>
-        <tbody>
-            <tr>
-                <td colspan="2">タイトル：title</td>
-                <td rowspan="2"><canvas id="chart_id" width="160" height="160"></canvas></td>
-            </tr>
-            <tr>
-                <td>ページ数：page</td>
-                <td>年代：year</td>
-            </tr>
-            <tr>
-                <td colspan="3">url</td>
-            </tr>
-        </tbody>
-    </table>
-    <script>
-        Chartjs("chart_id", num1, num2, num3);
-    </script>`;
-
-
-/***** sidebar setting * start *****/
-
-$(document).ready(function(){
-    const api_key_button = $('#apikey');
-
-    api_key_button.click(function(){
-        let openai_api_key = prompt('OpenAIのAPIキーを入力してください。\n※ gpt-4oモデルを使用しますので、金額にご注意ください。');
-
-        // apikey is entered correctly
-        if(APIKey_Input(openai_api_key)){
-            apiKey = openai_api_key;
-            api_key_button.css('background-color', '#c0c0c0');
-        }else{
-            apiKey = 'XXXXXXXXXX';
-            api_key_button.css('background-color', '');
+// Workflow Execution
+async function runWorkflow(inputs, responseMode, user) {
+    const url = `${BASE_URL}/workflows/run`;
+    const headers = {
+      "Authorization": `Bearer ${Dify_APIKEY}`,
+      "Content-Type": "application/json"
+    };
+    const data = {
+      inputs: inputs,
+      response_mode: responseMode,
+      user: user
+    };
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data)
+      });
+  
+      if (response.ok) {
+        if (responseMode === "blocking") {
+          const result = await response.json();
+          if (result.data && result.data.outputs && result.data.outputs.text) {
+            $('#loading').fadeOut();
+            return result.data.outputs.text;
+          } else {
+            console.error("Error: 'text' not found in the API response.");
+          }
+        } else if (responseMode === "streaming") {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let chunk;
+          while (!(chunk = await reader.read()).done) {
+            console.log(decoder.decode(chunk.value));
+          }
         }
-    });
-});
-
-function APIKey_Input(apikey){
-    if(apikey.startsWith("sk-")){
-        return true;
-    }else{
-        return false;
+      } else {
+        console.error(`Request failed with status code ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Fetch error: ", error);
     }
-}
+  }
 
-
-/***** sidebar setting * end *****/
-
-
-// using OpenAI API with fetch
 window.onload = function() {
     document.getElementById('input-form').addEventListener("submit", async (event) => {
-        // cancel reload
         event.preventDefault();
+        const inputTextAreaBib = document.getElementById('textarea1').value;
+        $('#loading').show();
+        const inputs = {input: inputTextAreaBib};
+        const responseMode = "blocking";
+        const user = "example_user";
 
-        if(APIKey_Input(apiKey)){
-            const input = document.getElementById('textarea1').value;
-            $('#loading').show();
-            fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        messages: [
-                        {"role": "user", "content": input + promptText}],
-                        model: "gpt-4o",
-                        max_tokens: 3000,
-                        temperature: 1,
-                        n: 1,
-                        stop: '###'
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    $('#loading').fadeOut();
-                    const text = data.choices[0].message.content;
-                    $('#ai_chart').html(text);
-                })
-                .catch(error => console.error(error));
-        }else{
-            alert('APIキーが正しく入力されていません');
-        }
+        const result = await runWorkflow(inputs, responseMode, user);
+        $('#ai_chart').html(result);
+
     });
-};
+}
 
-
-/***** OpenAI API setting * end *****/
+/***** Dify * end *****/
 
 
 
