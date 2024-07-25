@@ -464,16 +464,17 @@ function generateBibTex() {
         // Bib format to be generated
         let tmpTxt;
         if(httpRegex.test(url)){
-            tmpTxt = `@misc{${variable},&#10;    title={${title}},&#10;    author={${author}},&#10;    howpublished={\\url{${url}}},&#10;    year={${year}}&#10;}&#10;&#10;`;
+            tmpTxt = `@misc{${variable},\n    title={${title}},\n    author={${author}},\n    howpublished={\\url{${url}}},\n    year={${year}}\n}\n\n`;
         }else{
             if(url.trim() === ''){
-                tmpTxt = `@misc{${variable},&#10;    title={${title}},&#10;    author={${author}},&#10;    year={${year}}&#10;}&#10;&#10;`;
+                tmpTxt = `@misc{${variable},\n    title={${title}},\n    author={${author}},\n    year={${year}}\n}\n\n`;
             }else{
-                tmpTxt = `@misc{${variable},&#10;    title={${title}},&#10;    author={${author}},&#10;    howpublished={${url}},&#10;    year={${year}}&#10;}&#10;&#10;`;
+                tmpTxt = `@misc{${variable},\n    title={${title}},\n    author={${author}},\n    howpublished={${url}},\n    year={${year}}\n}\n\n`;
             }
         }
         const tmpBib = RewriteVariable(tmpTxt,'alertArea2');
-        $('#textarea2').html($('#textarea2').html() + tmpBib);
+        const currentText = $('#textarea2').val();
+        $('#textarea2').val(currentText + tmpBib);
     }
 
 }
