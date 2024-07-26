@@ -186,25 +186,22 @@ function SplitBib(BibText,area){
             // get a first author
             let firstName;
             if (author.includes(" and ") === true) {
-
                 //if there is a comma ",", assign the first name by splitting with the comma ","　：（例）Tanaka, Taro and Yamada, Hanako...
                 if(author.includes(",") === true){
                     firstName = author.split(",")[0];
                 }else if(author.includes("，") === true){
                     firstName = author.split("，")[0];
                 }else{
-
                     // split with " and " to get first author
                     firstName = author.split(" and ")[0];
                 }
-                
-                /***** processing via api * start *****/
-
-
-                /***** processing via api * end *****/
             } else {
                 // if there is no "and", assign the first name separated by ","：（例）Tanaka, Taro Yamada Hanako...
-                firstName = author.split(",")[0];
+                if(author.includes(",") === true){
+                    firstName = author.split(",")[0];
+                }else if(author.includes("，") === true){
+                    firstName = author.split("，")[0];
+                }
             }
 
             // count the number of occurrences of author
