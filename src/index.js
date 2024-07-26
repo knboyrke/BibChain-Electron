@@ -98,7 +98,7 @@ const year_4Digit_Regex = /^\d{4}$/;
 const fourDigitRegex = /\d{4}/g;
 
 // ❼ four digits in a sentence ex.)参照2024/2/18
-const fourDigit_b_Regex = /\b\d{4}\b/g;
+const fourDigit_b_Regex = /(^|\D)\d{4}(\D|$)/;
 
 // ❽ find 'http'
 const httpRegex = /^http/;
