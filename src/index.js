@@ -673,12 +673,12 @@ $(document).ready(function(){
 /**
  * if text is entered in a textbox or textarea, warn when leaving the page or reloading
  */
-$(window).on("beforeunload", function(e) {
-    if ($('#textarea1').val().length > 0 || $('#textarea2').val().length > 0 || $('#title').val().length > 0 || $('#author').val().length > 0 || $('#url').val().length > 0 || $('#year').val().length > 0) {
-        e.preventDefault();
-        return "本当にページを終了しますか？"; 
-    }
-});
+// $(window).on("beforeunload", function(e) {
+//     if ($('#textarea1').val().length > 0 || $('#textarea2').val().length > 0 || $('#title').val().length > 0 || $('#author').val().length > 0 || $('#url').val().length > 0 || $('#year').val().length > 0) {
+//         e.preventDefault();
+//         return "本当にページを終了しますか？"; 
+//     }
+// });
 
 /**
  * "Delete all input fields"
