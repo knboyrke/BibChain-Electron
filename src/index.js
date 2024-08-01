@@ -201,6 +201,8 @@ function SplitBib(BibText,area){
                     firstName = author.split(",")[0];
                 }else if(author.includes("，") === true){
                     firstName = author.split("，")[0];
+                }else{
+                    firstName = author;
                 }
             }
 
