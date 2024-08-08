@@ -427,11 +427,6 @@ function ButtonPress(){
 }
 
 
-$('.sidelikes a').on('click', function() {
-    
-});
-
-
 /**
  * output bib format
  */
